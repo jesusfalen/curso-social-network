@@ -46,4 +46,26 @@ class FollowingController extends Controller
         echo $status;
         exit;
     }
+    
+    public function unfollowAction(Request $request) {
+        $user = $this->getUser();
+        $followed_id = $request->get('followed');
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $following_repo = $em->getRepository('BackendBundle:Following');
+        $followed = $following_repo->findOneBy(array('user'=>$user,'followed'=>$followed_id));
+        
+        $em->remove($followed);
+        $flush = $em->flush();
+        
+        if($flush == null){
+            $status= "Has dejado de seguir correctamente a este usuario";
+        }else{
+            $status= "No se ha podido dejar de seguir";
+        }
+        
+        echo $status;
+        exit;
+    }
 }
