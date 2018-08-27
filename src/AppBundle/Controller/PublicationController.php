@@ -36,7 +36,7 @@ class PublicationController extends Controller
                         $ext = $file->guessExtension();
                         if($ext =='jpg' || $ext =='jpeg' || $ext =='png' || $ext =='gif'){
                             $file_name= $user->getId(). time().'.'.$ext;
-                            $file->move('upload/publication/images',$file_name);
+                            $file->move('uploads/publications/images',$file_name);
                             
                             $publication->setImage($file_name);
                         }
@@ -49,7 +49,7 @@ class PublicationController extends Controller
                         $ext = $doc->guessExtension();
                         if($ext =='pdf'){
                             $file_name= $user->getId(). time().'.'.$ext;
-                            $doc->move('upload/publication/documents',$file_name);
+                            $doc->move('uploads/publications/documents',$file_name);
                             
                             $publication->setDocument($file_name);
                         }
@@ -75,8 +75,40 @@ class PublicationController extends Controller
             return $this->redirectToRoute('home_publications');
        }
        
+       $publication = $this->getPublications($request);
+       
        return $this->render('AppBundle:Publication:home.html.twig',array(
-          'form'=>$form->createView() 
+          'form'=>$form->createView(),
+          'pagination'=>$publication
        )); 
+    }
+    
+    public function getPublications($request) {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        
+        $publications_repo= $em->getRepository('BackendBundle:Publication');
+        $following_repo = $em->getRepository('BackendBundle:Following');
+        
+        $following = $following_repo->findBy(array('user'=>$user));
+        
+        $following_array= array();
+        foreach ($following as $follow){
+            $following_array[] = $follow->getFollowed();
+        }
+        
+        $query = $publications_repo->createQueryBuilder('p')
+                ->where('p.user = (:user_id) OR p.user IN (:following)')
+                ->setParameter('user_id',$user->getId())
+                ->setParameter('following',$following_array)
+                ->orderBy('p.id','DESC')
+                ->getQuery();
+        
+        $paginator = $this->get('knp_paginator');
+        $paginator = $paginator->paginate(
+                     $query,$request->query->getInt('page',1),5);
+        
+        return $paginator;
+        
     }
 }

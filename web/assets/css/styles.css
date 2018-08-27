@@ -35,8 +35,9 @@ body{
     margin-bottom: 10px;
 }
 
-/* GENTE */
-.user-item .avatar{
+/* GENTE Y TIMELINE*/
+.user-item .avatar,
+.publication-item .avatar{
     background: #eee;
     border-radius: 550px;
     width: 75px;
@@ -45,12 +46,15 @@ body{
     float: left;
 }
 
-.user-item .avatar img{
+.user-item .avatar img,
+.publication-item .avatar img
+{
     height: 100%;
     text-align: center;
 }
 
-.user-item .user-item-content{
+.user-item .user-item-content,
+.publication-item .publication-item-content{
     padding: 10px;
     margin-left: 85px;
 }
@@ -116,4 +120,30 @@ body{
     margin-bottom: 10px;
 }
 
+.pub-name-link{
+    font-weight: bold;
+    color: black;
+}
+
+.pub-date{
+    color:gray;
+}
+
+.pub-image{
+    display: none;
+    transition: all 300ms;
+}
+
+.pub-image img{
+    width: 100%;
+    text-align:center;
+    display: block;
+    margin: 0px auto;
+}
+
+.publication-item .glyphicon{
+    margin-right: 7px;
+    cursor: pointer;
+    color: #44 !important;
+}
 

@@ -17,12 +17,12 @@
              
              <div class="box-content box-users">
                  {% for user in pagination %}
-                     <div class="col-lg-12 user-item">
+                     <div class="col-lg-12 publication-item">
                          <div class="avatar">
                              {% if user.image == null%}
                                  <img src="{{asset('assets/images/default.png')}}"/>
                              {%else%}
-                                 <img src="{{asset('upload/users/'~ user.image)}}"/>
+                                 <img src="{{asset('uploads/users/'~ user.image)}}"/>
                              {% endif%}
                          </div>
                          <div class="user-item-content">
