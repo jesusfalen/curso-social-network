@@ -1,7 +1,7 @@
 $(document).ready(function (){
     var ias = jQuery.ias({
        container: '.box-users',
-       item: '.user-item',
+       item: '.publication-item',
        pagination: '.pagination',
        next: '.pagination .next_link',
        triggerPageThreshold: 4

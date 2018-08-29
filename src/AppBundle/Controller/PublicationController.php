@@ -111,4 +111,28 @@ class PublicationController extends Controller
         return $paginator;
         
     }
+    
+    public function removePublicationAction(Request $request,$id = null) {
+        $em = $this->getDoctrine()->getManager();
+        $publications_repo = $em->getRepository('BackendBundle:Publication');
+        $publication = $publications_repo->find($id);
+        $user = $this->getUser();
+
+        if ($user->getId() == $publication->getUser()->getId()) {
+
+            $em->remove($publication);
+            $flush = $em->flush();
+
+            if ($flush == null) {
+                $status = 'La publicacion se ha borrado correctamente';
+            } else {
+                $status = 'La publicaion no se ah borrado';
+            }
+        } else {
+            $status = 'La publicaion no se ah borrado';
+        }
+
+        echo $status;
+        exit;
+    }
 }
