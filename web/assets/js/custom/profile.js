@@ -22,10 +22,12 @@ $(document).ready(function (){
     
     ias.on('ready',function (event) {
         Buttons();
+        followButtons();
     })
     
     ias.on('rendered',function (event) {
         Buttons();
+        followButtons();
     })
 });
 
@@ -72,5 +74,7 @@ function Buttons(){
         });
     });
 }
+
+
 
 

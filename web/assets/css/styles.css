@@ -259,3 +259,15 @@ body{
 .profile-box #user_stats .number-stat{
     font-weight: #444;
 }
+
+.profile-box .buttons-following{
+    margin-top: 20px;
+}
+
+/* PRIVATE MESSAGE */
+.box-private-message input,
+.box-private-message textarea,
+.box-private-message select{
+    margin-bottom: 10px;
+}
+
